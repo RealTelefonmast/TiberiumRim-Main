@@ -1,0 +1,6 @@
+﻿namespace TR
+{
+    class WorldZone
+    {
+    }
+}
