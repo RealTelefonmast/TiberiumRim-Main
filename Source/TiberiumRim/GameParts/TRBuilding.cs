@@ -13,7 +13,7 @@ public class TRBuilding : TRBuildingPrototype
     public override void SpawnSetup(Map map, bool respawningAfterLoad)
     {
         base.SpawnSetup(map, respawningAfterLoad);
-        TiberiumRimComp.SuperWeaponInfo.TryRegisterSuperweapon(this);
+        TiberiumRimComp.Notify_BuildingSpawned(this);
         TiberiumComp.RegisterTRBuilding(this);
         foreach (IntVec3 c in this.OccupiedRect())
         {

@@ -32,7 +32,7 @@ public class MapGenStep_Tiberium : GenStep
 
 	public override void Generate(Map map, GenStepParams parms)
 	{
-		var tibCoverage = Find.World.GetComponent<WorldComponent_TR>().TiberiumInfo.WorldCoverageAt(map.Tile);
+		var tibCoverage = TRUtils.Tiberium().GetWorldInfo<TiberiumWorldInfo>().WorldCoverageAt(map.Tile);
 	    TRLog.Debug($"Post-Processsing Map with Tiberium: {tibCoverage}");
 	    if (tibCoverage <= 0) return;
         //var perlin = new Perlin(0.5, 2, 1, 6, map.ConstantRandSeed, QualityMode.High);

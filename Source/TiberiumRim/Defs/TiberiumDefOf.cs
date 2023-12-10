@@ -108,7 +108,6 @@ namespace TR
         public static TiberiumKindDef VeinChunk;
 
         //Buildings
-        public static ThingDef ScrinDronePlatform;
         public static ThingDef TiberiumResearchCrane;
         public static ThingDef TiberiumPipe;
 
@@ -127,8 +126,6 @@ namespace TR
         public static JobDef IdleAtRefinery;
         public static JobDef HarvestTiberium;
         public static JobDef UnloadAtRefinery;
-
-        public static JobDef TiberiumResearch;
 
         //public static JobDef TiberiumBill;
 
@@ -153,7 +150,6 @@ namespace TR
         public static ThingDef BlueTiberiumMeteorIncoming;
         public static ThingDef RedTiberiumShardIncoming;
         public static ThingDef TiberiumMeteorIncoming;
-        public static ThingDef ScrinDronePlatformIncoming;
 
         //TerrainTags
         public static TerrainFilterDef TerrainFilter_Soil;

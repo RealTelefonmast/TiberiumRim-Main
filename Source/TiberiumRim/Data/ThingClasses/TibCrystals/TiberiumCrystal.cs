@@ -5,6 +5,8 @@ using System.Text;
 using RimWorld;
 using TeleCore;
 using TR.Data.Enums;
+using TR.TGraphics;
+using TR.Utilities;
 using UnityEngine;
 using Verse;
 

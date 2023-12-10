@@ -2,7 +2,7 @@
 
 namespace TR;
 
-public class TiberiumSettings : ModSettings
+public partial class TiberiumSettings : ModSettings
 {
     //Tiberium Settings:
     public bool BuildingDamage = true;
@@ -10,7 +10,6 @@ public class TiberiumSettings : ModSettings
     public bool PawnDamage = true;
     public bool UseProducerCap = false;
     public bool UseSpecificProducers = false;
-    private bool useCustomBG;
     private bool firstStartUp;
 
     public bool UseSpreadRadius = false;
@@ -31,17 +30,6 @@ public class TiberiumSettings : ModSettings
 
     //World Init Data
     public float tiberiumCoverage = 0f;
-
-    //Special Settings
-    public bool UseCustomBackground
-    {
-        get => useCustomBG;
-        set
-        {
-            useCustomBG = value;
-            Write();
-        }
-    }
 
     public bool FirstStartUp
     {
@@ -68,7 +56,6 @@ public class TiberiumSettings : ModSettings
         UseProducerCap = true;
         UseSpecificProducers = false;
         UseSpreadRadius = true;
-        UseCustomBackground = true;
         TiberiumProducersAmt = 5;
         WorldSpread = true;
 
@@ -88,7 +75,6 @@ public class TiberiumSettings : ModSettings
         UseProducerCap = false;
         UseSpecificProducers = false;
         UseSpreadRadius = false;
-        UseCustomBackground = true;
         TiberiumProducersAmt = 7;
         WorldSpread = true;
 
@@ -108,7 +94,6 @@ public class TiberiumSettings : ModSettings
         UseProducerCap = false;
         UseSpecificProducers = false;
         UseSpreadRadius = false;
-        UseCustomBackground = true;
         TiberiumProducersAmt = 5;
         WorldSpread = true;
 
@@ -123,19 +108,7 @@ public class TiberiumSettings : ModSettings
     public override void ExposeData()
     {
         base.ExposeData();
-        Scribe_Values.Look(ref useCustomBG, "useCustomBG");
         Scribe_Values.Look(ref firstStartUp, "firstStart");
         Scribe_Deep.Look(ref graphicsSettings, "graphics");
-
-        if (Scribe.mode == LoadSaveMode.PostLoadInit)
-        {
-            if (UseCustomBackground)
-            {
-                LongEventHandler.QueueLongEvent(delegate
-                {
-                    TiberiumSettings.Settings.UseCustomBackground = true;
-                },  string.Empty, false, null, false);
-            }
-        }
     }
 }

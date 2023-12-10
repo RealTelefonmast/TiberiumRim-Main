@@ -74,8 +74,10 @@
 	  <Folder Include="Data\Environment\TiberiumFields\" />
 	  <Folder Include="Data\Factions\" />
 	  <Folder Include="Data\ThingComps\" />
-	  <Folder Include="Rendering\Computation\" />
+	  <Folder Include="Factions\Scrin\" />
+	  <Folder Include="TGraphics\Computation\" />
 	  <Folder Include="Research\" />
+	  <Folder Include="Weaponry\Turrets\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -85,6 +87,10 @@
 	<ItemGroup>
 	  <Reference Include="AtmosCore">
 	    <HintPath>..\..\..\TR_GasesAndLiquids\Assemblies\AtmosCore.dll</HintPath>
+	  </Reference>
+	  <Reference Include="TiberiumRimCore">
+	    <HintPath>..\..\..\TiberiumRim-Core\Assemblies\TiberiumRimCore.dll</HintPath>
+	    <Private>False</Private>
 	  </Reference>
 	</ItemGroup>
 	

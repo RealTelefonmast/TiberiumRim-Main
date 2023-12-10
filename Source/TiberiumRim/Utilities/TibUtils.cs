@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using RimWorld;
 using TeleCore;
+using TR.TGraphics;
 using UnityEngine;
 using Verse;
 
@@ -58,19 +60,19 @@ public static class TibUtils
         switch (valueType)
         {
             case TiberiumValueType.Green:
-                tex = TRMats.GreenType;
+                tex = TiberiumMats.GreenType;
                 break;
             case TiberiumValueType.Blue:
-                tex = TRMats.BlueType;
+                tex = TiberiumMats.BlueType;
                 break;
             case TiberiumValueType.Red:
-                tex = TRMats.RedType;
+                tex = TiberiumMats.RedType;
                 break;
             case TiberiumValueType.Sludge:
-                tex = TRMats.SludgeType;
+                tex = TiberiumMats.SludgeType;
                 break;
             case TiberiumValueType.Gas:
-                tex = TRMats.GasType;
+                tex = TiberiumMats.GasType;
                 break;
         }
 
@@ -137,5 +139,54 @@ public static class TibUtils
         };
 
         return label;
+    }
+    
+    public static void GetTiberiumMutant(Pawn pawn, out Graphic Head, out Graphic Body)
+    {
+        Head = null;
+        Body = null;
+        if (pawn.def.defName != "Human")
+        {
+            PawnGraphicSet graphicSet = pawn.Drawer.renderer.graphics;
+            string headPath = graphicSet.headGraphic.path + "_TibHead";
+            string bodyPath = graphicSet.nakedGraphic.path + "_TibBody";
+            Head = GraphicDatabase.Get(typeof(Graphic_Multi), headPath, ShaderDatabase.Cutout, Vector2.one, Color.white,
+                Color.white);
+            Body = GraphicDatabase.Get(typeof(Graphic_Multi), bodyPath, ShaderDatabase.Cutout, Vector2.one, Color.white,
+                Color.white);
+        }
+        else
+        {
+            HeadTypeDef head = pawn.story.headType;
+            string headPath = head.graphicPath;
+            string headResolved;
+            BodyTypeDef body = pawn.story.bodyType;
+            string bodyResolved;
+            Gender gender = pawn.gender;
+
+            string appendix = "";
+            if (headPath.Contains("_Wide"))
+            {
+                appendix = "_Wide";
+            }
+
+            if (headPath.Contains("_Normal"))
+            {
+                appendix = "_Normal";
+            }
+
+            if (headPath.Contains("_Pointy"))
+            {
+                appendix = "_Pointy";
+            }
+
+            headResolved = "Pawns/TiberiumMutant/Heads/" + gender + "_" + head + appendix;
+            //Head = GraphicDatabase.Get(typeof(Graphic_Multi), headResolved, ShaderDatabase.MoteGlow, Vector2.one, Color.white, Color.white);
+            Head = GraphicDatabase.Get(typeof(Graphic_Multi), "Pawns/TiberiumMutant/Heads/Mutant_head",
+                ShaderDatabase.Cutout, Vector2.one, Color.white, Color.white);
+            bodyResolved = "Pawns/TiberiumMutant/Bodies/" + body.defName;
+            Body = GraphicDatabase.Get(typeof(Graphic_Multi), bodyResolved, ShaderDatabase.Cutout, Vector2.one,
+                Color.white, Color.white);
+        }
     }
 }

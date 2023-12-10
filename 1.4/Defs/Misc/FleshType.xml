@@ -19,21 +19,5 @@
 			</li>
 		</genericWounds>
 	</FleshTypeDef>
-
-	<FleshTypeDef>
-		<defName>Mechanical</defName>
-		<corpseCategory>CorpsesMechanoid</corpseCategory>
-		<genericWounds>
-			<li>
-				<texture>Things/Pawn/Wounds/WoundMechA</texture>
-			</li>
-			<li>
-				<texture>Things/Pawn/Wounds/WoundMechB</texture>
-			</li>
-			<li>
-				<texture>Things/Pawn/Wounds/WoundMechC</texture>
-			</li>
-		</genericWounds>
-	</FleshTypeDef>
   
 </Defs>

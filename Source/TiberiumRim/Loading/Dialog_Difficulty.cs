@@ -10,7 +10,7 @@ namespace TR
         private Action SetStandard;
         private Action SerHard;
 
-        private Texture2D Banner => TiberiumContent.Banner;
+        private Texture2D Banner => TRContent.Banner;
 
         public Dialog_Difficulty(Action setEasy, Action setStandard, Action serHard)
         {

@@ -14,7 +14,7 @@ namespace TR
         {
             public static void Postfix(MapParent __instance, ref bool alsoRemoveWorldObject, ref bool __result)
             {
-                var isWatched = TRUtils.Tiberium().WorldDataInfo.IsSpiedOn(__instance.Map);
+                var isWatched = TRTibUtils.Tiberium().WorldDataInfo.IsSpiedOn(__instance.Map);
                 if (isWatched)
                 {
                     __result = false;

@@ -4,6 +4,7 @@ using RimWorld;
 using TAC;
 using TeleCore;
 using TeleCore.Data.Events;
+using TR.TGraphics;
 using Verse;
 using Verse.Sound;
 

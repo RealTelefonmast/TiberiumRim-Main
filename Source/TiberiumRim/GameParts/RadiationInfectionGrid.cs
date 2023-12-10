@@ -93,7 +93,7 @@ namespace TR
 
         public void Update()
         {
-            if (TRUtils.Tiberium().GameSettings.RadiationOverlay)
+            if (TRTibUtils.Tiberium().TRTibGameSettings.RadiationOverlay)
             {
                 RadiationDrawer.MarkForDraw();
             }

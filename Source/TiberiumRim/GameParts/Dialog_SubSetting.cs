@@ -1,27 +1,26 @@
 ﻿using UnityEngine;
 using Verse;
 
-namespace TR
+namespace TR;
+
+public class Dialog_SubSetting : Window
 {
-    public class Dialog_SubSetting : Window
+    public Dialog_SubSetting()
     {
-        public Dialog_SubSetting()
-        {
-            base.closeOnClickedOutside = true;
-        }
+        base.closeOnClickedOutside = true;
+    }
 
-        public override float Margin => 0f;
+    public override float Margin => 0f;
 
-        public override Vector2 InitialSize => new Vector2(900f, 520f);
+    public override Vector2 InitialSize => new Vector2(900f, 520f);
 
-        public override void PostClose()
-        {
-            Find.WindowStack.Add(new Dialog_TiberiumRimSettings());
-        }
+    public override void PostClose()
+    {
+        Find.WindowStack.Add(new Dialog_TiberiumRimSettings());
+    }
 
-        public override void DoWindowContents(Rect inRect)
-        {
-            Widgets.DrawTextureFitted(inRect, TiberiumContent.MenuWindow, 1f);
-        }
+    public override void DoWindowContents(Rect inRect)
+    {
+        Widgets.DrawTextureFitted(inRect, TRContent.MenuWindow, 1f);
     }
 }

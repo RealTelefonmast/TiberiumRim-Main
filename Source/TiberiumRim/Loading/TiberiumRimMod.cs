@@ -6,132 +6,131 @@ using RimWorld;
 using UnityEngine;
 using Verse;
 
-namespace TR
+namespace TR;
+
+public class TiberiumRimMod : Mod
 {
-    public class TiberiumRimMod : Mod
+    //Static Data
+    public static TiberiumRimMod mod;
+    private static Harmony tiberium;
+
+    //
+    public static bool isDebug = true;
+
+    public static Harmony Tiberium => tiberium ??= new Harmony("telefonmast.tiberiumrim");
+
+    public static TiberiumSettings Settings => (TiberiumSettings) mod.modSettings;
+
+    public AssetBundle MainBundle
     {
-        //Static Data
-        public static TiberiumRimMod mod;
-        private static Harmony tiberium;
-
-        //
-        public static bool isDebug = true;
-
-        public static Harmony Tiberium => tiberium ??= new Harmony("telefonmast.tiberiumrim");
-
-        public static TiberiumSettings Settings => (TiberiumSettings) mod.modSettings;
-
-        public AssetBundle MainBundle
+        get
         {
-            get
-            {
-                string pathPart = "";
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                    pathPart = "StandaloneOSX";
-                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                    pathPart = "StandaloneWindows";
-                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                    pathPart = "StandaloneLinux64";
+            string pathPart = "";
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                pathPart = "StandaloneOSX";
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                pathPart = "StandaloneWindows";
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                pathPart = "StandaloneLinux64";
 
-                string mainBundlePath = Path.Combine(Content.RootDir, $@"Materials\Bundles\{pathPart}\tiberiumrimbundle");
-                return AssetBundle.LoadFromFile(mainBundlePath);
-            }
+            string mainBundlePath = Path.Combine(Content.RootDir, $@"Materials\Bundles\{pathPart}\tiberiumrimbundle");
+            return AssetBundle.LoadFromFile(mainBundlePath);
         }
+    }
 
-        /*
+    /*
 PlatformID pid = System.Environment.OSVersion.Platform;
 switch (pid)
 {
-    case PlatformID.Win32NT:
-    case PlatformID.Win32S:
-    case PlatformID.Win32Windows:
-    case PlatformID.WinCE:
-        Console.WriteLine("I'm on windows!");
-        break;
-    case PlatformID.Unix:
-        Console.WriteLine("I'm a linux box!");
-        break;
-    case PlatformID.MacOSX:
-        Console.WriteLine("I'm a mac!");
-        break;
-    default:
-        Console.WriteLine("No Idea what I'm on!");
-        break;
+case PlatformID.Win32NT:
+case PlatformID.Win32S:
+case PlatformID.Win32Windows:
+case PlatformID.WinCE:
+    Console.WriteLine("I'm on windows!");
+    break;
+case PlatformID.Unix:
+    Console.WriteLine("I'm a linux box!");
+    break;
+case PlatformID.MacOSX:
+    Console.WriteLine("I'm a mac!");
+    break;
+default:
+    Console.WriteLine("No Idea what I'm on!");
+    break;
 }
 */
 
-        public TiberiumRimMod(ModContentPack content) : base(content)
-        {
-            mod = this;
-            var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            TRLog.Message($"[TiberiumRim][{version}] - Init", Color.cyan);
-            modSettings = GetSettings<TiberiumSettings>();
+    public TiberiumRimMod(ModContentPack content) : base(content)
+    {
+        mod = this;
+        var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        TRLog.Message($"[TiberiumRim][{version}] - Init", Color.cyan);
+        modSettings = GetSettings<TiberiumSettings>();
 
-            //
-            Tiberium.PatchAll(Assembly.GetExecutingAssembly());
+        //
+        Tiberium.PatchAll(Assembly.GetExecutingAssembly());
 
-            //
+        //
             
-        }
+    }
 
-        public override void WriteSettings()
-        {
-            base.WriteSettings();
-        }
+    public override void WriteSettings()
+    {
+        base.WriteSettings();
+    }
 
+    /*
+    public void LoadAssetBundles()
+    {
+        string mainBundlePath = Path.Combine(Content.RootDir, @"Materials\Shaders\tiberiumrimbundle");
+        TRContentDatabase.SetBundle(AssetBundle.LoadFromFile(mainBundlePath));
+
+        //string path = Path.Combine(Content.RootDir, @"Materials\Shaders\shaderbundle");
+        //assetBundle = AssetBundle.LoadFromFile(path);
+        //TiberiumContent.AlphaShader = (Shader)assetBundle.LoadAsset("AlphaShader");
+        //TiberiumContent.AlphaShaderMaterial = (Material)assetBundle.LoadAsset("ShaderMaterial");
+    }
+    */
+
+    public void PatchPawnDefs()
+    {
         /*
-        public void LoadAssetBundles()
+        foreach (var def in DefDatabase<ThingDef>.AllDefs)
         {
-            string mainBundlePath = Path.Combine(Content.RootDir, @"Materials\Shaders\tiberiumrimbundle");
-            TRContentDatabase.SetBundle(AssetBundle.LoadFromFile(mainBundlePath));
-
-            //string path = Path.Combine(Content.RootDir, @"Materials\Shaders\shaderbundle");
-            //assetBundle = AssetBundle.LoadFromFile(path);
-            //TiberiumContent.AlphaShader = (Shader)assetBundle.LoadAsset("AlphaShader");
-            //TiberiumContent.AlphaShaderMaterial = (Material)assetBundle.LoadAsset("ShaderMaterial");
+            if (def?.thingClass == null) continue;
+            Type thingClass = def.thingClass;
+            if (!thingClass.IsSubclassOf(typeof(Pawn)) && thingClass != typeof(Pawn)) continue;
+            if (def.comps == null)
+                def.comps = new List<CompProperties>();
+            def.comps.Add(new CompProperties_TiberiumCheck());
+            def.comps.Add(new CompProperties_PawnExtraDrawer());
+            def.comps.Add(new CompProperties_CrystalDrawer());
         }
         */
+    }
 
-        public void PatchPawnDefs()
+    [HarmonyPatch(typeof(DefGenerator))]
+    [HarmonyPatch("GenerateImpliedDefs_PreResolve")]
+    public static class GenerateImpliedDefs_PreResolvePatch
+    {
+        public static void Postfix()
         {
             /*
-            foreach (var def in DefDatabase<ThingDef>.AllDefs)
+            foreach (TRThingDef def in DefDatabase<TRThingDef>.AllDefs)
             {
-                if (def?.thingClass == null) continue;
-                Type thingClass = def.thingClass;
-                if (!thingClass.IsSubclassOf(typeof(Pawn)) && thingClass != typeof(Pawn)) continue;
-                if (def.comps == null)
-                    def.comps = new List<CompProperties>();
-                def.comps.Add(new CompProperties_TiberiumCheck());
-                def.comps.Add(new CompProperties_PawnExtraDrawer());
-                def.comps.Add(new CompProperties_CrystalDrawer());
+                if (def.factionDesignation == null) continue;
+                TRThingDefList.Add(def);
+                ThingDef blueprint = TRUtils.MakeNewBluePrint(def, false, null);
+                ThingDef frame = TRUtils.MakeNewFrame(def);
+                DefGenerator.AddImpliedDef(blueprint);
+                DefGenerator.AddImpliedDef(frame);
+                if (def.Minifiable)
+                {
+                    def.minifiedDef = TRUtils.MakeNewBluePrint(def, true, blueprint);
+                }
+                DirectXmlCrossRefLoader.ResolveAllWantedCrossReferences(FailMode.Silent);
             }
             */
-        }
-
-        [HarmonyPatch(typeof(DefGenerator))]
-        [HarmonyPatch("GenerateImpliedDefs_PreResolve")]
-        public static class GenerateImpliedDefs_PreResolvePatch
-        {
-            public static void Postfix()
-            {
-                /*
-                foreach (TRThingDef def in DefDatabase<TRThingDef>.AllDefs)
-                { 
-                    if (def.factionDesignation == null) continue;
-                    TRThingDefList.Add(def);
-                    ThingDef blueprint = TRUtils.MakeNewBluePrint(def, false, null);
-                    ThingDef frame = TRUtils.MakeNewFrame(def);
-                    DefGenerator.AddImpliedDef(blueprint);
-                    DefGenerator.AddImpliedDef(frame);
-                    if (def.Minifiable)
-                    {
-                        def.minifiedDef = TRUtils.MakeNewBluePrint(def, true, blueprint);
-                    }
-                    DirectXmlCrossRefLoader.ResolveAllWantedCrossReferences(FailMode.Silent);
-                }
-                */
-            }
         }
     }
 }

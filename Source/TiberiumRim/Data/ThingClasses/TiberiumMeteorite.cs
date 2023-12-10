@@ -35,7 +35,7 @@ public class TiberiumMeteorite : TRBuilding, IRadiationLeaker, IResearchCraneTar
         base.SpawnSetup(map, respawningAfterLoad);
         if (!respawningAfterLoad)
         {
-            TRUtils.Tiberium().Notify_TiberiumArrival(map);
+            TRTibUtils.Tiberium().Notify_EventHappened("TiberiumArrival", map);
 
             //Initial Setup
             craterDef = new List<DefFloat<TiberiumProducerDef>>()

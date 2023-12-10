@@ -36,9 +36,6 @@
 		<hasInteractionCell>false</hasInteractionCell>	
 	</TR.TRThingDef>
 	
-	<TR.TRThingDef Abstract="True" Name="TurretBase_TR" ParentName="BuildingBase_TR">
-	</TR.TRThingDef>
-	
 	<!-- Natural -->
 	<TR.TRThingDef Abstract="True" Name="BuildingNaturalBase_TR" ParentName="BuildingBase_TR">
 		<passability>PassThroughOnly</passability>

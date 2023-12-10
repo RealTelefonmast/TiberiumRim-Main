@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TR.TGraphics;
 using UnityEngine;
 using Verse;
 
@@ -233,8 +234,8 @@ namespace TR
             GUI.color = TRColor.SymbioticColor;
             Widgets.Label(rect2, symb);
             GUI.color = Color.white;
-            Widgets.FillableBar(visceral, reverseVisc, TRMats.grey, TRMats.MutationVisceral, false);
-            Widgets.FillableBar(symbiotic, symbNum, TRMats.MutationSymbiotic, TRMats.grey, false);
+            Widgets.FillableBar(visceral, reverseVisc, TRCMats.grey, TRCMats.MutationVisceral, false);
+            Widgets.FillableBar(symbiotic, symbNum, TRCMats.MutationSymbiotic, TRCMats.grey, false);
             TooltipHandler.TipRegion(fullArea, "TR_MutationTip".Translate());
         }
     }

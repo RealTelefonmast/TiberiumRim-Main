@@ -582,7 +582,7 @@
 			<li>TR.ITab_MechConstruction</li>
 		</inspectorTabs>
 		<placeWorkers>
-			<li>TR.PlaceWorker_Gap</li>
+			<li>TeleCore.PlaceWorker_Gap</li>
 		</placeWorkers>
 		<hasInteractionCell>true</hasInteractionCell>
 		<interactionCellOffset>(0,0,-2)</interactionCellOffset>

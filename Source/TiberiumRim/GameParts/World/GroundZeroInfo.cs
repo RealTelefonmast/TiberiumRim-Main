@@ -1,44 +1,43 @@
 ﻿using Verse;
 
-namespace TR
+namespace TR;
+
+public class GroundZeroInfo : WorldInformation
 {
-    public class GroundZeroInfo : WorldInfo
-    {
-        private Thing groundZeroThing;
+    private Thing groundZeroThing;
 
-        private IGroundZero MainGroundZero;
+    private IGroundZero MainGroundZero;
 
-        public Thing GroundZero => groundZeroThing;
+    public Thing GroundZero => groundZeroThing;
         
-        public GroundZeroInfo(RimWorld.Planet.World world) : base(world) { }
+    public GroundZeroInfo(RimWorld.Planet.World world) : base(world) { }
 
-        public override void ExposeData()
+    public override void ExposeData()
+    {
+        Scribe_References.Look(ref groundZeroThing, "gzThing");
+
+        if (Scribe.mode == LoadSaveMode.PostLoadInit)
         {
-            Scribe_References.Look(ref groundZeroThing, "gzThing");
-
-            if (Scribe.mode == LoadSaveMode.PostLoadInit)
-            {
-                MainGroundZero = GetGroundZeroAfterLoad();
-            }
+            MainGroundZero = GetGroundZeroAfterLoad();
         }
+    }
 
-        private IGroundZero GetGroundZeroAfterLoad()
-        {
-            return (IGroundZero)groundZeroThing;
-        }
+    private IGroundZero GetGroundZeroAfterLoad()
+    {
+        return (IGroundZero)groundZeroThing;
+    }
 
-        public bool IsGroundZero(IGroundZero groundZero)
-        {
-            return MainGroundZero == groundZero;
-        }
+    public bool IsGroundZero(IGroundZero groundZero)
+    {
+        return MainGroundZero == groundZero;
+    }
 
-        public bool HasGroundZero => MainGroundZero != null;
+    public bool HasGroundZero => MainGroundZero != null;
 
-        public void TryRegisterGroundZero(IGroundZero groundZero)
-        {
-            if (MainGroundZero != null) return;
-            MainGroundZero = groundZero;
-            groundZeroThing = MainGroundZero.GZThing;
-        }
+    public void TryRegisterGroundZero(IGroundZero groundZero)
+    {
+        if (MainGroundZero != null) return;
+        MainGroundZero = groundZero;
+        groundZeroThing = MainGroundZero.GZThing;
     }
 }

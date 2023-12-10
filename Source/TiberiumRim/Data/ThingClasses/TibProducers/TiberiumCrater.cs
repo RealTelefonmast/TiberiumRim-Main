@@ -11,7 +11,7 @@ namespace TR
 
         public override bool ShouldSpawnTiberium => InitialResearchDone && base.ShouldSpawnTiberium;
 
-        public bool IsGroundZero => TiberiumRimComp.GroundZeroInfo.IsGroundZero(this);
+        public bool IsGroundZero => TiberiumRimComp.GetWorldInfo<GroundZeroInfo>().IsGroundZero(this);
         public Thing GZThing => this;
 
         public bool ShouldSpawnSpore => def.spore != null && IsMature;
@@ -32,7 +32,7 @@ namespace TR
             if (respawningAfterLoad) return;
 
             //Try Set GroundZero
-            TiberiumRimComp.GroundZeroInfo.TryRegisterGroundZero(this);
+            TiberiumRimComp.GetWorldInfo<GroundZeroInfo>().TryRegisterGroundZero(this);
         }
 
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)

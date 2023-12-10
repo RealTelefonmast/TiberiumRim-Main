@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using TeleCore.RWExtended;
-using Verse;
+﻿using Verse;
 
 namespace TR;
 

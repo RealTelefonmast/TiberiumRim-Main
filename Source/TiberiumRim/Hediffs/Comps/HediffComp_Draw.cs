@@ -1,4 +1,5 @@
-﻿using Verse;
+﻿using TR.TGraphics;
+using Verse;
 
 namespace TR
 {

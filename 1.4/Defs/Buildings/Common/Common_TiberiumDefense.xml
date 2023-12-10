@@ -42,7 +42,7 @@
 		</comps>
 		<placeWorkers>
 			<li>TR.PlaceWorker_Suppression</li>
-			<li>TR.PlaceWorker_Gap</li>
+			<li>TeleCore.PlaceWorker_Gap</li>
 			<li>PlaceWorker_NotUnderRoof</li>
 		</placeWorkers>
 		<tickerType>Never</tickerType>
